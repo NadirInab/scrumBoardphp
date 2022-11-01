@@ -3,9 +3,19 @@ let btnDelete = document.querySelector('#task-delete-btn');
 let btnUpdate = document.querySelector('#task-update-btn');
 let btnSave = document.querySelector('#task-save-btn');
 
-let data = document.getElementById("data") ;
+// ________________________
 
-console.log(data.value);
+var description = document.getElementById("task-description") ;
+
+console.log(description)
+
+
+// ________________________
+
+
+// let data = document.getElementById("data") ;
+
+// console.log(data.value);
 
 
 function addTask () {

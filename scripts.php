@@ -11,12 +11,23 @@
     {
         require 'database.php';
         $query = "SELECT * FROM tasks WHERE status_id = '$status' ";
+        // $query = "SELECT  " ;
         $result = mysqli_query($connection,$query);
+        // $data = mysqli_fetch_assoc($result) ;
+        
+          //  echo "<pre>" ;  
+          //     var_dump($data) ;
+          // echo "</pre>" ;
+          // die() ;
         global $count;
         while ($row = mysqli_fetch_array($result)) {
+          // echo "<pre>" ;  
+          //     var_dump($row) ;
+          // echo "</pre>" ;
+          // die() ;
             $count++;
             $priority_id =  $row['priority_id'];
-            $priorityQuery = "SELECT * FROM priorities WHERE id = ${priority_id}";
+            $priorityQuery = "SELECT * FROM priorities WHERE id = ${priority_id} ";
             $priorityData = mysqli_query($connection,$priorityQuery);
             $priorityResult =  mysqli_fetch_array($priorityData);
 
@@ -33,29 +44,26 @@
         
            echo '
            <button onClick="editTask(this,'.$row['id'].')" data-bs-toggle="modal" href="#modal-task" class="row mx-0 bg-white p-1 border-0 border-bottom btn-tasks">
-           <input type="hidden" id="data" value="">
                <div class="col-1">
                  <i class="'.$icon.'"></i> 
                </div>
                <div class="col-10 text-start">
                   <div "class="fw-bold fs-5 text-truncate">'.$row['title'].'</div>
                     <div >
-                      <div class="text-black-50">#'.$count.' created in '.$row['task_date'].' </div>
+                      <div class="text-black-50"> #'.$count.' created in '.$row['task_date'].' </div>
                       <div class="mb-2 text-truncate" title="as they can be helpful in reproducing the steps that caused the problem in the first place."> '.$row['description'].' </div>
                     </div>
                     <div class="pb-1">
                       <span class="bg-primary text-white p-1 rounded-1 fw-bold"> '.$priorityResult['name'].' </span>
                       <span class="bg-light-600 p-1 rounded-1 m-1 fw-bold"> '.$typeResult['name'].' </span>
                     </div>
-
                </div>
-         </button>';   
+            </button>';   
         }
     }
 
 
-    function saveTask()
-    {
+    function saveTask(){
         require 'database.php';
 
         $title = $_POST['title'];
@@ -88,10 +96,10 @@
         $date = $_POST['date'];
         $description = $_POST['description'];
 
-        $updateQuary = "UPDATE tasks 
+        $updateQuery = "UPDATE tasks 
                         SET title = '$title', description = '$description', type_id = '$type', priority_id = '$priority', status_id = '$status', task_date = '$date'
                         WHERE id = '$id'";
-        mysqli_query($connection,$updateQuary);
+        mysqli_query($connection,$updateQuery);
         $_SESSION['message'] = "Task has been updated successfully !";
 		    header('location: index.php');
     }
