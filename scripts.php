@@ -16,6 +16,7 @@
                     JOIN types ON types.id = tasks.type_id 
                     JOIN statuses ON statuses.id = tasks.status_id
                     WHERE statuses.id = '$status' ";
+
         $result = mysqli_query($connection,$query);
         while($data = mysqli_fetch_array($result)){
 
@@ -57,6 +58,7 @@
 
         $insertQuery = "INSERT INTO tasks(`title`, `type_id`, `priority_id`, `status_id`, `task_date`, `description`) 
                         VALUES('$title', '$type', '$priority', '$status', '$date', '$description')";
+
         $query = mysqli_query($connection,$insertQuery);
         $_SESSION['message'] = "Task has been added successfully !";
 		    // header('location: index.php');
@@ -76,6 +78,7 @@
         $updateQuery = "UPDATE tasks 
                         SET title = '$title', description = '$description', type_id = '$type', priority_id = '$priority', status_id = '$status', task_date = '$date'
                         WHERE id = '$id'";
+
         mysqli_query($connection,$updateQuery);
         $_SESSION['message'] = "Task has been updated successfully !";
 		    header('location: index.php');

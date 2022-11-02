@@ -40,7 +40,6 @@
 				</div>
 			<?php endif ?>
 			<div class="row">
-					
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse">
 						<div class="panel-heading">
