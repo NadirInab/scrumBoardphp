@@ -6,7 +6,7 @@
     if(isset($_POST['update']))      updateTask();
     if(isset($_POST['delete']))      deleteTask();
 
-    $count = 0;
+
     function getTasks($status)
     {
         require 'database.php';
@@ -17,10 +17,7 @@
                     JOIN statuses ON statuses.id = tasks.status_id
                     WHERE statuses.id = '$status' ";
         $result = mysqli_query($connection,$query);
-        // $data = mysqli_fetch_array($result) ;
-        global $count;
-        while ($data = mysqli_fetch_array($result)){
-            $count++;
+        while($data = mysqli_fetch_array($result)){
 
             if ($data["tasksStatus"] == 1) {
                $icon = 'bi bi-question-circle fs-3 text-success';
@@ -34,14 +31,14 @@
                  <i class="'.$icon.'"></i> 
                </div>
                <div class="col-10 text-start">
-                  <div "class="fw-bold fs-5 text-truncate">'.$data['title'].'</div>
+                  <div class="fw-normal fs-5 text-truncate">'.$data['title'].'</div>
                     <div >
-                      <div class="text-black-50"> #'.$count.' created in '.$data['task_date'].' </div>
+                      <div value="'.$data['task_date'].'" class="text-black-50"> created in '.$data['task_date'].' </div>
                       <div class="mb-2 text-truncate" > '.$data['description'].' </div>
                     </div>
                     <div class="pb-1">
-                      <span class="bg-primary text-white p-1 rounded-1 fw-bold"> '.$data['taskPriority'].' </span>
-                      <span class="bg-light-600 p-1 rounded-1 m-1 fw-bold"> '.$data['taskType'].' </span>
+                      <span value="'.$data['taskPriority'].'" class="bg-primary text-white p-1 rounded-1 fw-bold">'.$data['taskPriority'].' </span>
+                      <span value="'.$data['taskType'].'" class="bg-light-600 p-1 rounded-1 m-1 fw-bold"> '.$data['taskType'].' </span>
                     </div>
                </div>
             </button>';   
@@ -62,7 +59,7 @@
                         VALUES('$title', '$type', '$priority', '$status', '$date', '$description')";
         $query = mysqli_query($connection,$insertQuery);
         $_SESSION['message'] = "Task has been added successfully !";
-		    header('location: index.php');
+		    // header('location: index.php');
     }
 
     function updateTask(){
@@ -75,32 +72,32 @@
         $status = $_POST['status'];
         $date = $_POST['date'];
         $description = $_POST['description'];
-
+        
         $updateQuery = "UPDATE tasks 
                         SET title = '$title', description = '$description', type_id = '$type', priority_id = '$priority', status_id = '$status', task_date = '$date'
                         WHERE id = '$id'";
         mysqli_query($connection,$updateQuery);
         $_SESSION['message'] = "Task has been updated successfully !";
 		    header('location: index.php');
-    }
+      }
 
     function deleteTask(){
       require 'database.php';
+
         $id = $_POST['id'];
-        echo $id ;
         $deleteQuery = "DELETE FROM tasks WHERE id='$id'";
-         $result= mysqli_query($connection,$deleteQuery);
+        $result= mysqli_query($connection,$deleteQuery);
         $_SESSION['message'] = "Task has been deleted successfully !";
 		    header('location: index.php');
-    }
+      }
 
     function counter($status){
       require 'database.php';
 
       $countQuery = "SELECT * FROM tasks WHERE status_id = '$status' ";
       $query = mysqli_query($connection,$countQuery); 
-      $count1 = mysqli_num_rows($query);
-      return $count1;
+      $rowCount = mysqli_num_rows($query);
+      return $rowCount;
     }
 
 ?>

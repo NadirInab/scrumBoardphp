@@ -7,7 +7,6 @@
 						<a href="#" class="btn-close" data-bs-dismiss="modal"></a>
 					</div>
 					<div class="modal-body">
-							<!-- This Input Allows Storing Task Index  -->
 							<input type="hidden" name="id" id="task-id">
 							<div class="mb-3">
 								<label class="form-label">Title</label>
@@ -24,13 +23,12 @@
 										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-bug"/>
 										<label class="form-check-label" for="task-type-bug">Bug</label>
 									</div>
-								</div>
-								
+								</div>	
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Priority</label>
-								<select class="form-select" name="priority" id="task-priority">
-									<option value="">Please select</option>
+								<select class="form-select" name="priority"  id="task-priority">
+									<option >Please select</option>
 									<option value="1">Low</option>
 									<option value="2">Medium</option>
 									<option value="3">High</option>
