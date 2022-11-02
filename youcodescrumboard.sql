@@ -53,9 +53,6 @@ CREATE TABLE `statuses` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `statuses`
---
 
 INSERT INTO `statuses` (`id`, `name`) VALUES
 (1, 'To Do'),

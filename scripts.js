@@ -3,20 +3,6 @@ let btnDelete = document.querySelector('#task-delete-btn');
 let btnUpdate = document.querySelector('#task-update-btn');
 let btnSave = document.querySelector('#task-save-btn');
 
-// ________________________
-
-var description = document.getElementById("task-description") ;
-
-console.log(description)
-
-
-// ________________________
-
-
-// let data = document.getElementById("data") ;
-
-// console.log(data.value);
-
 
 function addTask () {
     btnUpdate.style.display = 'none';
@@ -27,8 +13,15 @@ function addTask () {
 }
 
 function editTask (e,id) {
-    console.log(e);
-    console.log(id) ;
+    
+    var title = document.getElementById("task-title") ;
+    var date = document.getElementById("task-date") ;
+    var description = document.getElementById("task-description") ;
+
+    console.log(title) ;
+    console.log(date) ;
+    console.log(description) ;
+    
     document.getElementById('task-id').value = id;
 
     btnCancel.style.display = 'block';

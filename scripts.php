@@ -10,58 +10,43 @@
     function getTasks($status)
     {
         require 'database.php';
-        $query = "SELECT * FROM tasks WHERE status_id = '$status' ";
-        // $query = "SELECT  " ;
+         $query = " SELECT tasks.id as taskID ,title, task_date, description, priorities.name as taskPriority, types.name as taskType , statuses.id as tasksStatus
+                    FROM tasks
+                    JOIN priorities ON priorities.id = tasks.priority_id
+                    JOIN types ON types.id = tasks.type_id 
+                    JOIN statuses ON statuses.id = tasks.status_id
+                    WHERE statuses.id = '$status' ";
         $result = mysqli_query($connection,$query);
-        // $data = mysqli_fetch_assoc($result) ;
-        
-          //  echo "<pre>" ;  
-          //     var_dump($data) ;
-          // echo "</pre>" ;
-          // die() ;
+        // $data = mysqli_fetch_array($result) ;
         global $count;
-        while ($row = mysqli_fetch_array($result)) {
-          // echo "<pre>" ;  
-          //     var_dump($row) ;
-          // echo "</pre>" ;
-          // die() ;
+        while ($data = mysqli_fetch_array($result)){
             $count++;
-            $priority_id =  $row['priority_id'];
-            $priorityQuery = "SELECT * FROM priorities WHERE id = ${priority_id} ";
-            $priorityData = mysqli_query($connection,$priorityQuery);
-            $priorityResult =  mysqli_fetch_array($priorityData);
 
-            $type_id = $row['type_id'];
-            $typeQuery = "SELECT * FROM types WHERE id = ${type_id} ";
-            $typeData = mysqli_query($connection,$typeQuery);
-            $typeResult = mysqli_fetch_array($typeData);
-
-            if ($status == 1) {
+            if ($data["tasksStatus"] == 1) {
                $icon = 'bi bi-question-circle fs-3 text-success';
-            }else if ($status == 2) {
+            }else if ($data["tasksStatus"] == 2) {
                 $icon = 'spinner-border spinner-border-sm text-success mt-1';
             }else $icon = 'bi bi-check-circle fs-3 text-success';
-        
+
            echo '
-           <button onClick="editTask(this,'.$row['id'].')" data-bs-toggle="modal" href="#modal-task" class="row mx-0 bg-white p-1 border-0 border-bottom btn-tasks">
+           <button onClick="editTask(this,'.$data['taskID'].')" data-bs-toggle="modal" href="#modal-task" class="row mx-0 bg-white p-1 border-0 border-bottom btn-tasks">
                <div class="col-1">
                  <i class="'.$icon.'"></i> 
                </div>
                <div class="col-10 text-start">
-                  <div "class="fw-bold fs-5 text-truncate">'.$row['title'].'</div>
+                  <div "class="fw-bold fs-5 text-truncate">'.$data['title'].'</div>
                     <div >
-                      <div class="text-black-50"> #'.$count.' created in '.$row['task_date'].' </div>
-                      <div class="mb-2 text-truncate" title="as they can be helpful in reproducing the steps that caused the problem in the first place."> '.$row['description'].' </div>
+                      <div class="text-black-50"> #'.$count.' created in '.$data['task_date'].' </div>
+                      <div class="mb-2 text-truncate" > '.$data['description'].' </div>
                     </div>
                     <div class="pb-1">
-                      <span class="bg-primary text-white p-1 rounded-1 fw-bold"> '.$priorityResult['name'].' </span>
-                      <span class="bg-light-600 p-1 rounded-1 m-1 fw-bold"> '.$typeResult['name'].' </span>
+                      <span class="bg-primary text-white p-1 rounded-1 fw-bold"> '.$data['taskPriority'].' </span>
+                      <span class="bg-light-600 p-1 rounded-1 m-1 fw-bold"> '.$data['taskType'].' </span>
                     </div>
                </div>
             </button>';   
         }
     }
-
 
     function saveTask(){
         require 'database.php';
@@ -82,11 +67,6 @@
 
     function updateTask(){
         require 'database.php';
-        // echo "<pre>" ;
-        //   var_dump($_POST) ;
-        // echo "</pre>" ; 
-
-        //die() ;
 
         $id = $_POST['id'];
         $title = $_POST['title'];
@@ -104,26 +84,22 @@
 		    header('location: index.php');
     }
 
-
-
     function deleteTask(){
       require 'database.php';
         $id = $_POST['id'];
+        echo $id ;
         $deleteQuery = "DELETE FROM tasks WHERE id='$id'";
          $result= mysqli_query($connection,$deleteQuery);
         $_SESSION['message'] = "Task has been deleted successfully !";
 		    header('location: index.php');
     }
 
-
-
     function counter($status){
       require 'database.php';
 
-      $countAllRows = "SELECT * FROM tasks WHERE status_id = '$status' ";
-
-      $query1 = mysqli_query($connection,$countAllRows); 
-      $count1 = mysqli_num_rows($query1);
+      $countQuery = "SELECT * FROM tasks WHERE status_id = '$status' ";
+      $query = mysqli_query($connection,$countQuery); 
+      $count1 = mysqli_num_rows($query);
       return $count1;
     }
 

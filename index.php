@@ -74,7 +74,7 @@
 						</div>
 						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="in-progress-tasks">
 							<?php
-								// in progresse
+							// In progresse
 								getTasks('2');
 							?>
 						</div>
