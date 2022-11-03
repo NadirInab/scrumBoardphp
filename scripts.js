@@ -11,6 +11,7 @@ function addTask () {
     btnSave.style.display = 'block';
 }
 
+
 function editTask (e,id) {
     
     var myTitle = e.children[1].children[0].innerText ;

@@ -15,10 +15,10 @@
                     JOIN priorities ON priorities.id = tasks.priority_id
                     JOIN types ON types.id = tasks.type_id 
                     JOIN statuses ON statuses.id = tasks.status_id
-                    WHERE statuses.id = '$status' ";
+                    WHERE statuses.id = '$status'";
 
         $result = mysqli_query($connection,$query);
-        while($data = mysqli_fetch_array($result)){
+        while($data = mysqli_fetch_assoc($result)){
 
             if ($data["tasksStatus"] == 1) {
                $icon = 'bi bi-question-circle fs-3 text-success';
